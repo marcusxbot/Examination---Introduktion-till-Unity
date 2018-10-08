@@ -6,16 +6,23 @@ public class Skeppet : MonoBehaviour
 
     public Color color;
     public SpriteRenderer rend;
-    public float time;
-    public float movespeed = 1;
-    public float rotationspeed = -5;
+    private float time;
+    public float movespeed;
+    private float rotationspeedH = -5;
+    private float rotationspeedV = 4.5f;
+    private float Färg1;
+    private float Färg2;
+    private float Färg3;
+    private int ok;
+
+
 
 
 
     // Use this for initialization
     void Start()
     {
-
+        movespeed += Random.Range(0, 5);
     }
 
     // Update is called once per frame
@@ -24,27 +31,46 @@ public class Skeppet : MonoBehaviour
 
         if (Input.GetKey(KeyCode.D))         // vilken knapp  
         {
-            transform.Rotate(0, 0, rotationspeed);     // rotera höger
+            transform.Rotate(0, 0, rotationspeedH);     // rotera höger
             rend.color = Color.blue;         // objekt blir blå
         }
         if (Input.GetKey(KeyCode.A))         //vilken knapp
         {
-            transform.Rotate(0, 0, rotationspeed + 9.5f);      // roterar vänster
+            transform.Rotate(0, 0, rotationspeedV);      // roterar vänster
             rend.color = Color.green;        // objekt blir grön
         }
 
         transform.Translate(0, movespeed, 0);    // Åker alltid framåt
 
-        if (Input.GetKey(KeyCode.S))         // vilken knapp
+        if (Input.GetKeyDown(KeyCode.S))         // vilken knapp
         {
-            transform.Translate(0, movespeed - 0.5f, 0); // Hastigheten framåt
+            movespeed = movespeed / 2;              // Hastigheten framåt
         }
-        time += Time.deltaTime;
-        Debug.Log(string.Format("Timer {0}", time));   // timer som visar
+        if (Input.GetKeyUp(KeyCode.S))           // vilken knapp
+        {
+            movespeed = movespeed * 2;           // hastigheten framåt
+        }
+   
 
-        if (Input.GetKey(KeyCode.Space))
-        {
-            
+        time += Time.deltaTime;
+        if (time >= ok + 1)
+        {                                   // timer
+            ok += 1;
+            Debug.Log("Timer " + ok);
         }
+           // timer som visar
+
+
+        if (Input.GetKey(KeyCode.Space))      // vilken knapp
+        {
+            Färg1 = Random.Range(0f, 1f);
+            Färg2 = Random.Range(0f, 1f);       // färg
+            Färg3 = Random.Range(0f, 1f);
+            rend.color = new Color (Färg1, Färg2, Färg3); 
+        }
+
+        
+        
+            
     }
 }
