@@ -14,6 +14,7 @@ public class Skeppet : MonoBehaviour
     private float Färg2;
     private float Färg3;
     private int ok;
+    private int Vector3;
 
 
 
@@ -22,7 +23,11 @@ public class Skeppet : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        movespeed += Random.Range(0, 5);
+        movespeed += Random.Range(1, 5);
+
+        //  skeppet spawnar på en random position innanför skärmen när spelet startar
+        Vector3 position = new Vector3(Random.Range(-100.0f, 100.0f), Random.Range(-100.0f, 100.0f), 0);
+            transform.position = position;
     }
 
     // Update is called once per frame
@@ -68,9 +73,26 @@ public class Skeppet : MonoBehaviour
             Färg3 = Random.Range(0f, 1f);
             rend.color = new Color (Färg1, Färg2, Färg3); 
         }
-
-        
-        
-            
+        // när skeppet går förbi position -338 x warp till position 280 x
+        if (transform.position.x < -338)
+        {
+            transform.position = new Vector3(280, transform.position.y);
+        }
+        // när skeppet går förbi position 280 x warp till position -338 x
+        if (transform.position.x > 280)
+        {
+            transform.position = new Vector3(-338, transform.position.y);
+        }
+        // när skeppet går förbi position -183 y warp till position 160 y
+        if (transform.position.y < -160)
+        {
+            transform.position = new Vector3(transform.position.x, 183);
+        }
+        // när skeppet går förbi position 183 y warp till position -160 y
+        if (transform.position.y > 183)
+        {
+            transform.position = new Vector3(transform.position.x, -160);
+        }
     }
+
 }
